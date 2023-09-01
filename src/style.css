@@ -42,6 +42,7 @@ button.previous-control, button.next-control {
 }
 
 .image-display {
+    position: relative;
     display: flex;
     justify-content: center;
 
@@ -50,7 +51,19 @@ button.previous-control, button.next-control {
 }
 
 .image-display img {
-    display: none;
+    position: absolute;
+    height: 100%;
+    width: auto;
+    opacity: 0;
+    transition: all 1s linear;
+}
+
+.image-display img.visible {
+    position: static;
+    height: 100%;
+    width: auto;
+    opacity: 1;
+    transition: all 1s linear;
 }
 
 /* .image-display img:nth-child(2n+1) {
@@ -76,8 +89,4 @@ button.previous-control, button.next-control {
 
 .navigation-container .nav-circle.selected {
     background-color: black;
-}
-
-.image-display img.visible {
-    display: block;
 }
