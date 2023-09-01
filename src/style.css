@@ -60,10 +60,7 @@ button.previous-control, button.next-control {
 
 .image-display img.visible {
     position: static;
-    height: 100%;
-    width: auto;
     opacity: 1;
-    transition: all 1s linear;
 }
 
 /* .image-display img:nth-child(2n+1) {
