@@ -20,7 +20,7 @@ body {
 .slider {
     display: grid;
     grid-template-columns: 50px max-content 50px;
-    grid-template-rows: 50px var(--image-height) 50px;
+    grid-template-rows: 50px max-content 50px;
 
     border: 1px solid black;
     border-radius: 50px;
@@ -51,9 +51,10 @@ button.previous-control, button.next-control {
 }
 
 .image-display img {
+    box-sizing: content-box;
     position: absolute;
-    height: 100%;
-    width: auto;
+    height: var(--image-height);
+    width: var(--image-width);
     opacity: 0;
     transition: all 0.5s linear;
 }
