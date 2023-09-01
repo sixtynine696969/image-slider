@@ -32,22 +32,25 @@ body {
     grid-column: span 3;
 }
 
-.previous-control, .next-control {
+button.previous-control, button.next-control {
+    border: none;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2.5rem;
-    
 }
 
 .image-display {
     display: flex;
     justify-content: center;
+
+    border: 10px ridge gray;
+    border-radius: 10px;
 }
 
 .image-display img {
     display: none;
-    border: 10px ridge gray;
 }
 
 /* .image-display img:nth-child(2n+1) {
