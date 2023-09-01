@@ -55,7 +55,7 @@ button.previous-control, button.next-control {
     height: 100%;
     width: auto;
     opacity: 0;
-    transition: all 1s linear;
+    transition: all 0.5s linear;
 }
 
 .image-display img.visible {
