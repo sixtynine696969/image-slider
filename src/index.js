@@ -4,7 +4,7 @@ const slideButtons = document.querySelectorAll('.slider > button');
 const slideCircles = document.querySelectorAll('.nav-circle');
 const imageElements = document.querySelectorAll('.image-display > img');
 const lastImageIndex = imageElements[imageElements.length - 1].dataset.imageIndex;
-
+let interValId;
 
 function doesNextImageExist(index) {
     return document.querySelector(`img[data-image-index="${index + 1}"]`);
@@ -12,14 +12,6 @@ function doesNextImageExist(index) {
 
 function doesPreviousImageExist(index) {
     return document.querySelector(`img[data-image-index="${index - 1}"]`);
-}
-
-function moveToImage(visibleImage, selectedCircle, index) {
-    visibleImage.classList.remove('visible');
-    document.querySelector(`img[data-image-index="${index}"]`).classList.add('visible');
-
-    selectedCircle.classList.remove('selected');
-    document.querySelector(`button[data-image-nav="${index}"]`).classList.add('selected');
 }
 
 function moveToNext() {
@@ -31,22 +23,18 @@ function moveToNext() {
     moveToImage(visibleImage, selectedCircle, nextIndex);
 }
 
-slideButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const visibleImage = document.querySelector('.visible');
-        const selectedCircle = document.querySelector('.selected');
-        const imageIndex = Number(visibleImage.dataset.imageIndex);
-        let nextIndex;
+function startNewInterval() {
+    clearInterval(interValId);
+    interValId = setInterval(moveToNext, 5000);
+}
 
-        if (e.target.classList.contains('previous-control')) {
-            nextIndex = !doesPreviousImageExist(imageIndex) ? lastImageIndex : imageIndex - 1;
-        } else {
-            nextIndex = !doesNextImageExist(imageIndex) ? 1 : imageIndex + 1;
-        }
+function moveToImage(visibleImage, selectedCircle, index) {
+    visibleImage.classList.remove('visible');
+    document.querySelector(`img[data-image-index="${index}"]`).classList.add('visible');
 
-        moveToImage(visibleImage, selectedCircle, nextIndex);
-    })
-})
+    selectedCircle.classList.remove('selected');
+    document.querySelector(`button[data-image-nav="${index}"]`).classList.add('selected');
+}
 
 function unselectAndHide() {
     document.querySelector('.visible').classList.remove('visible');
@@ -65,5 +53,28 @@ slideCircles.forEach(btn => {
 
         unselectAndHide();
         selectAndShow(selectedCircleIndex);
+        
+        startNewInterval();
     })
 })
+
+slideButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const visibleImage = document.querySelector('.visible');
+        const selectedCircle = document.querySelector('.selected');
+        const imageIndex = Number(visibleImage.dataset.imageIndex);
+        let nextIndex;
+
+        if (e.target.classList.contains('previous-control')) {
+            nextIndex = !doesPreviousImageExist(imageIndex) ? lastImageIndex : imageIndex - 1;
+        } else {
+            nextIndex = !doesNextImageExist(imageIndex) ? 1 : imageIndex + 1;
+        }
+
+        moveToImage(visibleImage, selectedCircle, nextIndex);
+
+        startNewInterval();
+    })
+})
+
+startNewInterval();
