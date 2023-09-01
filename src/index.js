@@ -2,6 +2,9 @@ import './style.css';
 
 const slideButtons = document.querySelectorAll('.slider > button');
 const slideCircles = document.querySelectorAll('.nav-circle');
+const imageElements = document.querySelectorAll('.image-display > img');
+const lastImageIndex = imageElements[imageElements.length - 1].dataset.imageIndex;
+
 
 function doesNextImageExist(index) {
     return document.querySelector(`img[data-image-index="${index + 1}"]`);
@@ -36,7 +39,7 @@ slideButtons.forEach(btn => {
         let nextIndex;
 
         if (e.target.classList.contains('previous-control')) {
-            nextIndex = !doesPreviousImageExist(imageIndex) ? 3 : imageIndex - 1;
+            nextIndex = !doesPreviousImageExist(imageIndex) ? lastImageIndex : imageIndex - 1;
         } else {
             nextIndex = !doesNextImageExist(imageIndex) ? 1 : imageIndex + 1;
         }
