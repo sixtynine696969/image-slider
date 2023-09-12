@@ -14,6 +14,18 @@ function doesPreviousImageExist(index) {
   return document.querySelector(`img[data-image-index="${index - 1}"]`);
 }
 
+function moveToImage(visibleImage, selectedCircle, index) {
+  visibleImage.classList.remove('visible');
+  document
+    .querySelector(`img[data-image-index="${index}"]`)
+    .classList.add('visible');
+
+  selectedCircle.classList.remove('selected');
+  document
+    .querySelector(`button[data-image-nav="${index}"]`)
+    .classList.add('selected');
+}
+
 function moveToNext() {
   const visibleImage = document.querySelector('.visible');
   const selectedCircle = document.querySelector('.selected');
@@ -26,18 +38,6 @@ function moveToNext() {
 function startNewInterval() {
   clearInterval(interValId);
   interValId = setInterval(moveToNext, 5000);
-}
-
-function moveToImage(visibleImage, selectedCircle, index) {
-  visibleImage.classList.remove('visible');
-  document
-    .querySelector(`img[data-image-index="${index}"]`)
-    .classList.add('visible');
-
-  selectedCircle.classList.remove('selected');
-  document
-    .querySelector(`button[data-image-nav="${index}"]`)
-    .classList.add('selected');
 }
 
 function unselectAndHide() {
