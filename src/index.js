@@ -7,74 +7,84 @@ const lastImageIndex = imageElements[imageElements.length - 1].dataset.imageInde
 let interValId;
 
 function doesNextImageExist(index) {
-    return document.querySelector(`img[data-image-index="${index + 1}"]`);
+  return document.querySelector(`img[data-image-index="${index + 1}"]`);
 }
 
 function doesPreviousImageExist(index) {
-    return document.querySelector(`img[data-image-index="${index - 1}"]`);
+  return document.querySelector(`img[data-image-index="${index - 1}"]`);
 }
 
 function moveToNext() {
-    const visibleImage = document.querySelector('.visible');
-    const selectedCircle = document.querySelector('.selected');
-    const imageIndex = Number(visibleImage.dataset.imageIndex);
-    const nextIndex = !doesNextImageExist(imageIndex) ? 1 : imageIndex + 1;
+  const visibleImage = document.querySelector('.visible');
+  const selectedCircle = document.querySelector('.selected');
+  const imageIndex = Number(visibleImage.dataset.imageIndex);
+  const nextIndex = !doesNextImageExist(imageIndex) ? 1 : imageIndex + 1;
 
-    moveToImage(visibleImage, selectedCircle, nextIndex);
+  moveToImage(visibleImage, selectedCircle, nextIndex);
 }
 
 function startNewInterval() {
-    clearInterval(interValId);
-    interValId = setInterval(moveToNext, 5000);
+  clearInterval(interValId);
+  interValId = setInterval(moveToNext, 5000);
 }
 
 function moveToImage(visibleImage, selectedCircle, index) {
-    visibleImage.classList.remove('visible');
-    document.querySelector(`img[data-image-index="${index}"]`).classList.add('visible');
+  visibleImage.classList.remove('visible');
+  document
+    .querySelector(`img[data-image-index="${index}"]`)
+    .classList.add('visible');
 
-    selectedCircle.classList.remove('selected');
-    document.querySelector(`button[data-image-nav="${index}"]`).classList.add('selected');
+  selectedCircle.classList.remove('selected');
+  document
+    .querySelector(`button[data-image-nav="${index}"]`)
+    .classList.add('selected');
 }
 
 function unselectAndHide() {
-    document.querySelector('.visible').classList.remove('visible');
-    document.querySelector('.selected').classList.remove('selected');
+  document.querySelector('.visible').classList.remove('visible');
+  document.querySelector('.selected').classList.remove('selected');
 }
 
 function selectAndShow(index) {
-    document.querySelector(`img[data-image-index="${index}"]`).classList.add('visible');
-    document.querySelector(`button[data-image-nav="${index}"]`).classList.add('selected');
+  document
+    .querySelector(`img[data-image-index="${index}"]`)
+    .classList.add('visible');
+  document
+    .querySelector(`button[data-image-nav="${index}"]`)
+    .classList.add('selected');
 }
 
-slideCircles.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const selectedCircle = e.target;
-        const selectedCircleIndex = Number(selectedCircle.dataset.imageNav);
+slideCircles.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const selectedCircle = e.target;
+    const selectedCircleIndex = Number(selectedCircle.dataset.imageNav);
 
-        unselectAndHide();
-        selectAndShow(selectedCircleIndex);
-        
-        startNewInterval();
-    })
-})
+    unselectAndHide();
+    selectAndShow(selectedCircleIndex);
 
-slideButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const visibleImage = document.querySelector('.visible');
-        const selectedCircle = document.querySelector('.selected');
-        const imageIndex = Number(visibleImage.dataset.imageIndex);
-        let nextIndex;
+    startNewInterval();
+  });
+});
 
-        if (e.target.classList.contains('previous-control')) {
-            nextIndex = !doesPreviousImageExist(imageIndex) ? lastImageIndex : imageIndex - 1;
-        } else {
-            nextIndex = !doesNextImageExist(imageIndex) ? 1 : imageIndex + 1;
-        }
+slideButtons.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const visibleImage = document.querySelector('.visible');
+    const selectedCircle = document.querySelector('.selected');
+    const imageIndex = Number(visibleImage.dataset.imageIndex);
+    let nextIndex;
 
-        moveToImage(visibleImage, selectedCircle, nextIndex);
+    if (e.target.classList.contains('previous-control')) {
+      nextIndex = !doesPreviousImageExist(imageIndex)
+        ? lastImageIndex
+        : imageIndex - 1;
+    } else {
+      nextIndex = !doesNextImageExist(imageIndex) ? 1 : imageIndex + 1;
+    }
 
-        startNewInterval();
-    })
-})
+    moveToImage(visibleImage, selectedCircle, nextIndex);
+
+    startNewInterval();
+  });
+});
 
 startNewInterval();
